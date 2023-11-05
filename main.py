@@ -11,8 +11,21 @@ WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
+timer = None
+
 
 # ---------------------------- TIMER RESET ------------------------------- #
+
+
+def reset_timer():
+    global reps
+    reps = 0
+
+    window.after_cancel(timer)
+    canvas.itemconfig(timer_text, text="00:00")
+    title_label.config(text="Timer", font=(
+        FONT_NAME, 50), fg=GREEN, bg=YELLOW)
+    check_marks_label.config(text="")
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 
@@ -23,10 +36,14 @@ def start_timer():
     if reps % 8 == 0:
         count_down(LONG_BREAK_MIN * 60)
         reps = 0
+        title_label.config(text="Break", fg=RED)
     elif reps % 2 == 0:
         count_down(SHORT_BREAK_MIN * 60)
+        title_label.config(text="Break", fg=PINK)
     else:
         count_down(WORK_MIN * 60)
+        title_label.config(text="Work", fg=GREEN)
+
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 
@@ -38,9 +55,14 @@ def count_down(count):
         seconds = f"0{seconds}"
     canvas.itemconfig(timer_text, text=f"{minutes}:{seconds}")
     if count > 0:
-        window.after(1000, count_down, count - 1)
+        global timer
+        timer = window.after(1000, count_down, count - 1)
     else:
         start_timer()
+        check_marks = " "
+        for _ in range(math.floor(reps / 2)):
+            check_marks += "✔"
+        check_marks_label.config(text=check_marks)
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -55,9 +77,9 @@ title_label = Label(text="Timer", font=(
 title_label.grid(row=0, column=1)
 
 
-check_marks_label = Label(text="✔", font=(
+check_marks_label = Label(font=(
     FONT_NAME, 35, "bold"), fg=GREEN, bg=YELLOW)
-# check_marks_label.grid(row=3, column=1)
+check_marks_label.grid(row=3, column=1)
 
 # CANVAS
 # highlightthickness = 0 will get rid of the border left when changing the bg
@@ -75,7 +97,7 @@ start_btn = Button(text="Start", borderwidth=0,
 start_btn.grid(row=2, column=0)
 
 reset_btn = Button(text="Reset", borderwidth=0,
-                   highlightthickness=0, padx=3, pady=3)
+                   highlightthickness=0, padx=3, pady=3, command=reset_timer)
 reset_btn.grid(row=2, column=2)
 
 window.mainloop()
