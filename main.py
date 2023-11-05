@@ -24,13 +24,13 @@ window.config(padx=100, pady=50, bg=YELLOW)
 
 # LABELS
 title_label = Label(text="Timer", font=(
-    FONT_NAME, 35, "bold"), fg=GREEN, bg=YELLOW)
+    FONT_NAME, 50), fg=GREEN, bg=YELLOW)
 title_label.grid(row=0, column=1)
 
 
-check_mark_label = Label(text="✔", font=(
+check_marks_label = Label(text="✔", font=(
     FONT_NAME, 35, "bold"), fg=GREEN, bg=YELLOW)
-check_mark_label.grid(row=3, column=1)
+# check_marks_label.grid(row=3, column=1)
 
 # CANVAS
 # highlightthickness = 0 will get rid of the border left when changing the bg
@@ -42,9 +42,13 @@ canvas.create_text(100, 112, text="00:00", fill="white",
 canvas.grid(row=1, column=1)
 
 # Buttons
-start_btn = Button(text="Start")
-reset_btn = Button(text="Reset")
+# Buttons
+start_btn = Button(text="Start", borderwidth=0,
+                   highlightthickness=0, padx=3, pady=3)
 start_btn.grid(row=2, column=0)
+
+reset_btn = Button(text="Reset", borderwidth=0,
+                   highlightthickness=0, padx=3, pady=3)
 reset_btn.grid(row=2, column=2)
 
 window.mainloop()
