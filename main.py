@@ -1,6 +1,7 @@
 from tkinter import *
 import math
 
+
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
 RED = "#e7305b"
@@ -13,6 +14,14 @@ LONG_BREAK_MIN = 20
 reps = 0
 timer = None
 
+# ---------------------------- TOGGLE BUTTONS ------------------------------- #
+
+
+def toggle_start_button_state():
+    if start_btn['state'] == 'disabled':
+        start_btn['state'] = 'normal'
+    else:
+        start_btn['state'] = 'disabled'
 
 # ---------------------------- TIMER RESET ------------------------------- #
 
@@ -20,7 +29,7 @@ timer = None
 def reset_timer():
     global reps
     reps = 0
-
+    toggle_start_button_state()
     window.after_cancel(timer)
     canvas.itemconfig(timer_text, text="00:00")
     title_label.config(text="Timer", font=(
@@ -33,6 +42,7 @@ def reset_timer():
 def start_timer():
     global reps
     reps += 1
+    toggle_start_button_state()
     if reps % 8 == 0:
         count_down(LONG_BREAK_MIN * 60)
         reps = 0
@@ -91,7 +101,6 @@ timer_text = canvas.create_text(100, 112, text="00:00", fill="white",
 canvas.grid(row=1, column=1)
 
 # Buttons
-# Buttons
 start_btn = Button(text="Start", borderwidth=0,
                    highlightthickness=0, padx=3, pady=3, command=start_timer)
 start_btn.grid(row=2, column=0)
@@ -99,5 +108,6 @@ start_btn.grid(row=2, column=0)
 reset_btn = Button(text="Reset", borderwidth=0,
                    highlightthickness=0, padx=3, pady=3, command=reset_timer)
 reset_btn.grid(row=2, column=2)
+
 
 window.mainloop()
