@@ -19,6 +19,12 @@ This is a simple Pomodoro timer application built using Python and Tkinter. The 
 
 ```bash
 pip install tk
+
+Clone or download this repository.
+Usage
+Save the provided code into a Python file, for example, pomodoro_timer.py.
+Make sure you have the tomato-s.png image in the same directory as the Python file. This image is used as a background image on the timer canvas.
+Run the Python file:
 Make sure you have the tomato-s.png image in the same directory as the Python file. This image is used as a background image on the timer canvas.
 Run the Python file:
 
